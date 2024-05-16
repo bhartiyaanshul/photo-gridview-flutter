@@ -77,12 +77,15 @@ class _MyHomePageState extends State<MyHomePage> {
           // ElevatedButtonWidget(),
           // FormWidget()
        // ],
-      body: GridView.count(
+      body: GridView.builder(
         padding: const EdgeInsets.fromLTRB(20, 40, 20, 30),
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        crossAxisCount: 2,
-        children: List.generate(imageList.length, (index) {
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10
+        ),
+        itemCount: imageList.length,
+        itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             child: Container(
               padding: const EdgeInsets.all(2),
@@ -108,36 +111,41 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
           );  
-        }),
-        // children: <Widget>[
-        //   // Image.network('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',),
-          // Container(
-          //   padding: const EdgeInsets.all(8),
-          //   color: const Color.fromARGB(255, 137, 84, 230),
-          //   child: const Text("He'd have you all unravel at the",style: TextStyle(color: Colors.white),),
-          // ),
-          // Stack(
-          //   children: <Widget>[
-          //     Image.network('',),
-          //     const Text("Image",style: TextStyle(color: Colors.white),textScaler: TextScaler.linear(2),)
-          //   ],
-          // ),
-
-          
-        //   Image.network('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',),
-        //   Image.network('https://fastly.picsum.photos/id/480/200/200.jpg?hmac=q_kzh_8Ih85_5t_jN3rcD3npeNBLA41oDGtQZVkmmYs'),
-        //   Image.network('https://fastly.picsum.photos/id/117/200/200.jpg?hmac=hAXY0lMbkjkxYIKxW0UjtazVquGY1NCu3ruHLJGc4gs'),
-        //   Image.network('https://fastly.picsum.photos/id/1039/200/200.jpg?hmac=VpGJWDIq64ZdzDD5NAREaY7l5gX14vU5NBH84b5Fj-o'),
-        //   Image.network('https://fastly.picsum.photos/id/5/200/200.jpg?hmac=oN9VtXdJYLSFssji8vCr48JaI-e5Zi4eH9GAiYBB_Ig'),
-        //   Image.network('https://fastly.picsum.photos/id/335/200/200.jpg?hmac=CS4kiSEelfhSQQtW7j6SFUV2ZlTmUV1vaX2iZKnbx7c'),
-        //   Image.network('https://fastly.picsum.photos/id/275/200/200.jpg?hmac=rTtDDof8-XH1HHCkHvJYmlWJU81lIlFVqweHCDDrifQ'),
-        //   Image.network('https://fastly.picsum.photos/id/20/200/200.jpg?hmac=wHmtG3BEC6aOsGZU_Q2wnxVQq34B__t4x4LFw-sptM8'),
-        //   Image.network('https://fastly.picsum.photos/id/378/200/200.jpg?hmac=p3D7bBkZrx1JzS7apkMa8wGrQ-IaD9aNykMbpZ0DHDU'),
-        //   Image.network('https://fastly.picsum.photos/id/130/200/200.jpg?hmac=pMGv0FZ4yiuwOp40JbbSUg8DSKRdq2Rx70VXtqMrbjI'),
-        //   Image.network('https://fastly.picsum.photos/id/1003/200/200.jpg?hmac=w2SN03yog7_RB-IfnyWX1FtBjSHebnoWD35Lj4-iV7o'),
-        //   Image.network('https://fastly.picsum.photos/id/575/200/200.jpg?hmac=u8uMtAWK-6Ug08Vo4nf84xQLlwJqyrXpfzsU9a3YpCY'),
-        // ],
-      ),
+        }
+      )
+      // GridView.count(
+      //   padding: const EdgeInsets.fromLTRB(20, 40, 20, 30),
+      //   mainAxisSpacing: 10,
+      //   crossAxisSpacing: 10,
+      //   crossAxisCount: 2,
+      //   children: List.generate(imageList.length, (index) {
+      //     return GestureDetector(
+      //       child: Container(
+      //         padding: const EdgeInsets.all(2),
+      //         color: const Color.fromARGB(255, 137, 84, 230),
+      //         child: Image.network(imageList[index]),
+      //       ),
+      //       onTap: ()  {
+      //         showDialog(
+      //           context: context, 
+      //           builder: (BuildContext context){
+      //             return GestureDetector(
+      //               onTap: () => Navigator.pop(context),
+      //               child: BackdropFilter(
+      //                 filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+      //                 child: GestureDetector(
+      //                   onDoubleTap: () {
+      //                     launchUrl(Uri.parse(imageList[index]));
+      //                   },
+      //                   child: Image.network(imageList[index]))
+      //               )
+      //             );
+      //           }
+      //         );
+      //       },
+      //     );  
+      //   }),       
+      // ),
     );
   }
 }
