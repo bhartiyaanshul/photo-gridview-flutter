@@ -1,10 +1,6 @@
 import 'dart:developer';
-
-import 'dart:ui';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -86,33 +82,88 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         itemCount: imageList.length,
         itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              color: const Color.fromARGB(255, 137, 84, 230),
-              child: Image.network(imageList[index]),
-            ),
-            onTap: ()  {
-              showDialog(
-                context: context, 
-                builder: (BuildContext context){
-                  return GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                      child: GestureDetector(
-                        onDoubleTap: () {
-                          launchUrl(Uri.parse(imageList[index]));
-                        },
-                        child: Image.network(imageList[index]))
-                    )
-                  );
-                }
-              );
-            },
-          );  
-        }
-      )
+          return Material(
+            child: InkWell(
+              child: Hero(
+                tag: imageList[index],
+                child: Image.network(imageList[index])
+              ),
+              onTap: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (_, __, ___) => PhotoViewerWidget(imageValue: imageList[index])
+                ));
+              },
+            )
+          );
+        },
+      ),
+    );
+  }
+}
+
+class PhotoViewerWidget extends StatelessWidget {
+  final imageValue;
+
+  const PhotoViewerWidget({super.key, required this.imageValue});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.black.withOpacity(0.8),
+      child: InkWell(
+        child: Hero(
+          tag: imageValue,
+          child: GestureDetector(
+            child: Image.network(imageValue),
+            onLongPress: () => launchUrl(Uri.parse(imageValue)),
+          )
+        ),
+        onTap: () => Navigator.of(context).pop(),
+      ),
+    );
+  }
+}
+
+
+      // body: GridView.builder(
+      //   padding: const EdgeInsets.fromLTRB(20, 40, 20, 30),
+        
+      //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //     crossAxisCount: 2,
+      //     mainAxisSpacing: 10,
+      //     crossAxisSpacing: 10
+      //   ),
+      //   itemCount: imageList.length,
+      //   itemBuilder: (BuildContext context, int index) {
+      //     return GestureDetector(
+      //       child: Container(
+      //         padding: const EdgeInsets.all(2),
+      //         color: const Color.fromARGB(255, 137, 84, 230),
+      //         child: Image.network(imageList[index]),
+      //       ),
+      //       onTap: ()  {
+      //         showDialog(
+      //           context: context, 
+      //           builder: (BuildContext context){
+      //             return GestureDetector(
+      //               onTap: () => Navigator.pop(context),
+      //               child: BackdropFilter(
+      //                 filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+      //                 child: GestureDetector(
+      //                   onDoubleTap: () {
+      //                     launchUrl(Uri.parse(imageList[index]));
+      //                   },
+      //                   child: Image.network(imageList[index]))
+      //               )
+      //             );
+      //           }
+      //         );
+      //       },
+      //     );  
+      //   }
+      // )
+
       // GridView.count(
       //   padding: const EdgeInsets.fromLTRB(20, 40, 20, 30),
       //   mainAxisSpacing: 10,
@@ -146,10 +197,6 @@ class _MyHomePageState extends State<MyHomePage> {
       //     );  
       //   }),       
       // ),
-    );
-  }
-}
-
 class ElevatedButtonWidget extends StatefulWidget {
   const ElevatedButtonWidget({super.key});
 
